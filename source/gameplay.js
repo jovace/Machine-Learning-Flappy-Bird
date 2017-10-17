@@ -151,7 +151,7 @@ App.Main.prototype = {
 				
 				// reset barriers
 				this.BarrierGroup.forEach(function(barrier){
-					barrier.restart(700 + barrier.index * this.BARRIER_DISTANCE);
+					barrier.restart(700 + barrier.index * this.BARRIER_DISTANCE * (Math.random()+0.15));
 				}, this);
 				
 				// define pointer to the first barrier
@@ -202,7 +202,8 @@ App.Main.prototype = {
 						if (bird.y<0 || bird.y>610) this.onDeath(bird);
 						
 						// perform a proper action (flap yes/no) for this bird by activating its neural network
-						this.GA.activateBrain(bird, this.TargetPoint);
+						//Pasar argumento gravedad.
+						this.GA.activateBrain(bird, this.TargetPoint, this.game.physics.arcade.gravity.y);
 					}
 				}, this);
 				
@@ -214,7 +215,8 @@ App.Main.prototype = {
 				
 				// if the first barrier went out of the left bound then restart it on the right side
 				if (this.firstBarrier.getWorldX() < -this.firstBarrier.width){
-					this.firstBarrier.restart(this.lastBarrier.getWorldX() + this.BARRIER_DISTANCE);
+					//Aqui va la modificacion
+					this.firstBarrier.restart(this.lastBarrier.getWorldX() + this.BARRIER_DISTANCE * (Math.random()+0.15));
 					
 					this.firstBarrier = this.getNextBarrier(this.firstBarrier.index);
 					this.lastBarrier = this.getNextBarrier(this.lastBarrier.index);
